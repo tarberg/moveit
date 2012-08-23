@@ -1,0 +1,30 @@
+@(loginForm: Form[Application.LoginForm])
+
+@import helper._
+
+<html>
+<head>
+    <title>MoveIT</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+</head>
+<body>
+
+<h1>Login</h1>
+
+@form(routes.Application.authenticate()) {
+    <table>
+        <tr>
+            <th>Username</th>
+            <td><input type="text" name="username" value="" id="username"/></td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td><input type="text" name="password" value="" id="password"/></td>
+        </tr>
+    </table>
+
+    <p><input type="submit" value="Login"></p>
+}
+
+</body>
+</html>

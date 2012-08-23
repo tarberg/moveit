@@ -1,0 +1,28 @@
+@(orders: List[Order])
+
+@import helper._
+
+@main("Orders") {
+
+    <h1>Orders</h1>
+
+    <table border="1">
+        <tr>
+            <th>Details</th>
+            <th>Order id</th>
+            <th>Order date</th>
+            <th>Price</th>
+        </tr>
+        @if(orders != null && !orders.isEmpty()) {
+            @for(order <- orders) {
+            <tr>
+                <td><a href="/order/@order.id">Show order details</a></td>
+                <td>@order.id</td>
+                <td>@order.orderDate</td>
+                <td>$150</td>
+            </tr>
+            }
+        }
+    </table>
+
+}

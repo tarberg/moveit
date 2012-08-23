@@ -1,0 +1,44 @@
+@(order: Order)
+
+@import helper._
+
+@main("Order") {
+
+    <h1>Order details</h1>
+
+    <div class="orangeBox">
+        <dl>
+            <dt>Order id:</dt>
+            <dd>@order.id</dd>
+            <dt>Order date:</dt>
+            <dd>@order.orderDate</dd>
+        </dl>
+    </div>
+
+    <h3>Package list</h3>
+    @if(order != null && order.parcels != null) {
+        <table border="1">
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Size</th>
+                <th>Type</th>
+            </tr>
+            @for(parcel <- order.parcels) {
+                <tr>
+                    <td>@parcel.fromRegion.name</td>
+                    <td>@parcel.toRegion.name</td>
+                    <td>@parcel.size</td>
+                    <td>
+                        @if(parcel.express) {
+                          Express
+                        }else{
+                          Normal
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+}

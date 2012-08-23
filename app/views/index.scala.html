@@ -1,0 +1,14 @@
+@(customer: Customer)
+
+@import helper._
+
+@main("MoveIT!") {
+
+    <h1>Hello @customer.name and welcome to Valtech MoveIT!</h1>
+
+    <ul>
+        <li><a href="/orders/new">Create new order</a></li>
+        <li><a href="/orders">Show my orders</a></li>
+    </ul>
+
+}

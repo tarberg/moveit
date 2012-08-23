@@ -1,0 +1,75 @@
+html {
+	background-color: orange;
+}
+
+body {
+	background-color: white;
+	border: 2px solid darkorange;
+	width: 800px;
+	margin: 2em;
+	padding: 1em;
+}
+
+body,p,input,textarea {
+	font-family: verdana;
+}
+
+h1,h2,h3 {
+	font-family: arial;
+}
+
+table.list {
+        width: 100%;
+}
+
+table.blank {	
+	border: white;	
+	border-collapse: collapse;
+}
+
+table {
+	border-collapse: collapse;
+	border: 1px solid darkorange;
+	width: 100%;
+}
+
+th {
+	border: 1px solid orange;
+	background-color: beige;
+}
+
+th,td {
+	padding: 0.2em;
+}
+
+.actionMessage {
+	background-color: red;	
+}
+
+dl {
+    margin: 5px;
+}
+
+dl dt {
+	float:left;
+	padding:5px;
+	width:100px;
+}
+
+dl dd {
+	margin:2px 0;
+	padding:5px 0;
+}
+
+.orangeBox {
+    border: 1px solid orange;
+}
+
+input[type="submit"] {
+    margin: 5px;
+}
+
+.error {
+    color: red;
+    font-style: italic;
+}

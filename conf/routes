@@ -1,0 +1,23 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                   controllers.Application.index()
+
+# Authentication
+GET     /login                              controllers.Application.login()
+POST    /login                              controllers.Application.authenticate()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                       controllers.Assets.at(path="/public", file)
+
+# Tasks
+GET     /orders/new                         controllers.MoveIt.newOrder()
+POST    /orders/new                         controllers.MoveIt.addPackage()
+POST    /orders/submit                      controllers.MoveIt.submit()
+POST    /orders/cancel                      controllers.MoveIt.cancel()
+
+GET     /orders                             controllers.MoveIt.orders()
+GET     /order/:id                          controllers.MoveIt.order(id: java.lang.Integer)
+

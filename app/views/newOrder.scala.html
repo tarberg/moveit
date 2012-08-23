@@ -1,0 +1,74 @@
+@(order: Order, parcelForm: Form[MoveIt.ParcelForm])
+
+@import helper._
+
+@main("Create new order") {
+
+    <h1>Create new order</h1>
+
+    @if(flash.containsKey("error")) {
+        <p class="error">
+            @flash.get("error")
+        </p>
+    }
+
+    <h2>Add package</h2>
+
+    @form(routes.MoveIt.addPackage()) {
+        <div class="orangeBox">
+            @inputText(parcelForm("from"), '_label -> "From:")
+
+            @inputText(parcelForm("to"), '_label -> "To:")
+
+            @inputText(parcelForm("size"), '_label -> "Size:")
+
+            @checkbox(
+                parcelForm("express"),
+                '_label -> "Express?", '_text -> None,
+                '_showConstraints -> false
+            )
+            <input type="submit" value="Add package" class="submit"/>
+        </div>
+
+    }
+
+    <h3>Package list</h3>
+    @if(order != null && order.parcels != null) {
+    <table border="1">
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Size</th>
+            <th>Type</th>
+        </tr>
+        @for(parcel <- order.parcels) {
+        <tr>
+            <td>@parcel.fromRegion.name</td>
+            <td>@parcel.toRegion.name</td>
+            <td>@parcel.size</td>
+            <td>
+                @if(parcel.express) {
+                  Express
+                }else{
+                  Normal
+                }
+            </td>
+        </tr>
+        }
+        <tr>
+            <td colspan="2"></td>
+            <th>Total price</th>
+            <td>$150</td>
+        </tr>
+    </table>
+    }
+
+    @form(routes.MoveIt.submit()) {
+        <input type="submit" value="Submit order"/>
+    }
+
+    @form(routes.MoveIt.cancel()) {
+        <input type="submit" value="Cancel"/>
+    }
+
+}
