@@ -8,8 +8,6 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import java.util.List;
-
 public class MoveIt extends Controller {
 
     public static class ParcelForm {
@@ -22,8 +20,7 @@ public class MoveIt extends Controller {
     static Form<ParcelForm> parcelForm = form(ParcelForm.class);
 
     public static Result newOrder() {
-        Order order = Customer.getCustomer().currentOrder;
-        return ok(views.html.newOrder.render(order, parcelForm));
+        return ok(views.html.newOrder.render(Customer.getCustomer().currentOrder, parcelForm));
     }
 
     public static Result submit() {
@@ -39,8 +36,7 @@ public class MoveIt extends Controller {
     }
 
     public static Result orders() {
-        List<models.Order> orders = models.Order.findByCustomer(Customer.getCustomer());
-        return ok(views.html.orders.render(orders));
+        return ok(views.html.orders.render(Order.all()));
     }
 
     public static Result order(Integer orderId) {
@@ -56,7 +52,7 @@ public class MoveIt extends Controller {
     }
 
     public static Result cancel() {
-        Logger.debug("Deleting temp order");
+        Logger.debug("Deleting current order");
         Customer.getCustomer().currentOrder = null;
         return redirect(routes.Application.index());
     }
@@ -69,7 +65,6 @@ public class MoveIt extends Controller {
 
         Form<ParcelForm> filledForm = parcelForm.bindFromRequest();
         if (filledForm.hasErrors()) {
-            Logger.debug("Error: " + filledForm.errorsAsJson().asText());
             return badRequest(views.html.newOrder.render(customer.currentOrder, parcelForm));
         } else {
             ParcelForm parcelForm = filledForm.get();
@@ -79,6 +74,5 @@ public class MoveIt extends Controller {
             return redirect(routes.MoveIt.newOrder());
         }
     }
-
 
 }

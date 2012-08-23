@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Customer;
-import play.Logger;
 import play.cache.Cache;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -10,10 +9,9 @@ public class Application extends Controller {
 
     public static final String USER_ID = "UserId";
 
-    public static class LoginForm {
-        public String email;
-        public String password;
-    }
+    public static final int ONE_HOUR = 3600;
+
+    public static final Customer TURE_TEST = new Customer("Ture Test");
 
     public static Result index() {
         Customer customer = Customer.getCustomer();
@@ -24,30 +22,34 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        return ok(views.html.login.render(form(LoginForm.class)));
+        return ok(views.html.login.render());
     }
 
     /**
      * Sets fake user and redirects to index page..
      */
     public static Result authenticate() {
-        String userIdString = session(USER_ID);
+        String userId = session(USER_ID);
         Customer customer;
-        if (userIdString != null) {
-            customer = Customer.find.byId(Integer.parseInt(userIdString));
+        if (userId != null) {
+            customer = Customer.find.byId(Integer.parseInt(userId));
             if (customer != null) {
-                Cache.set(USER_ID + userIdString, customer);
+                cache(userId, customer);
             } else {
-                customer = new Customer("Ture Test");
+                customer = TURE_TEST;
             }
         } else {
-            customer = new Customer("Ture Test");
+            customer = TURE_TEST;
         }
         customer.save();
-        userIdString = "" + customer.id;
-        session(USER_ID, userIdString);
-        Cache.set(USER_ID + userIdString, customer, 3600);
+        userId = Integer.toString(customer.id);
+        session(USER_ID, userId);
+        cache(userId, customer);
         return redirect(routes.Application.index());
+    }
+
+    private static void cache(String userId, Customer customer) {
+        Cache.set(USER_ID + userId, customer, ONE_HOUR);
     }
 
 }
